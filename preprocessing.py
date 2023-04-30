@@ -3,6 +3,9 @@ import pandas as pd
 import re
 import nltk
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from functools import reduce
 import gensim
 
 
@@ -26,6 +29,16 @@ class Preprocessing(object):
         sub_str = re.sub(r'([a-z])\1{2,}', r'\1', sub_str)
         # removing asterisk in string delim
         sub_str = re.sub(r'\*|\W\*|\*\W', '. ', sub_str)
+        sub_str = ' '.join([i for i in sub_str.split(" ") if i.isalpha()])
+        return sub_str
+
+    def __stemmer(self, sub_str) -> str:
+        """ Only use if it is required and as mentioned in config
+        can add spell corrector post stemming to rectify over stemming
+        """
+        ps = PorterStemmer()
+        words = word_tokenize(sub_str)
+        sub_str = reduce(lambda x, y: x + " " + ps.stem(y), words, "")
         return sub_str
 
     def text_clean(self) -> None:
@@ -38,19 +51,27 @@ class Preprocessing(object):
         self.df['edited_text'] = self.df.apply(lambda x: ' '.join([i for i in x['edited_text'].split(" ")
                                                                    if i not in stopwords_en]), axis=1)
 
+    def stemming(self) -> None:
+        """Default language is English here"""
+        stopwords_en = stopwords.words('english')
+        self.df['edited_text'] = self.df.apply(lambda x: self.__stemmer(x['edited_text']), axis=1)
+
     def write_back(self) -> None:
         """ Write csv back to temp folder"""
         self.df.to_csv("./output/temp/input_data.csv", index=False)
 
     def main(self):
+
         self.get_csv()
         self.text_clean()
         self.remove_stopwords()
+        self.stemming()
         self.write_back()
 
 
 PATH = "./output/temp/input_data.csv"
 if __name__ == "__main__":
     # nltk.download('stopwords')
+    # nltk.download('punkt')
     prep_obj = Preprocessing(PATH)
     prep_obj.main()
