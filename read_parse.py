@@ -18,7 +18,7 @@ class GetInput(object):
         self.df = pd.DataFrame()
 
     def __len__(self) -> int:
-        return len(self.text)
+        return len(self.df)
 
     def __get_dataframe__(self) -> None:
         """ Convert to dataframe with index and columns
@@ -30,18 +30,26 @@ class GetInput(object):
 
 def main(input_file_path):
     """ Need input file path with text written with enters"""
+    file_format = input_file_path.split('.')[-1]
+
     if os.path.exists(input_file_path):
-        with open(input_file_path, 'r') as file:
-            lines = []
-            for line in file:
-                lines.append(str(line).strip())
-        new_obj = GetInput(lines)
-        new_obj.__get_dataframe__()
-        # write df to output
-        new_obj.df.to_csv("./output/temp/input_data.csv", index=False)
+        if file_format == 'txt':
+            with open(input_file_path, 'r') as file:
+                lines = []
+                for line in file:
+                    lines.append(str(line).strip())
+            new_obj = GetInput(lines)
+            new_obj.__get_dataframe__()
+            # write df to output
+            new_obj.df.to_csv("./output/temp/input_data.csv", index=False)
+        elif file_format == 'xlsx':
+            df = pd.read_excel(input_file_path)
+            df = df.reset_index()
+            df.columns = ['index', 'text']
+            df.to_csv("./output/temp/input_data.csv", index=False)
     else:
         print("Enter correct path, no file exist")
 
 
 if __name__ == "__main__":
-    main("./input/input.txt")
+    main("./input/data.xlsx")

@@ -29,7 +29,7 @@ class Preprocessing(object):
         sub_str = re.sub(r'([a-z])\1{2,}', r'\1', sub_str)
         # removing asterisk in string delim
         sub_str = re.sub(r'\*|\W\*|\*\W', '. ', sub_str)
-        sub_str = ' '.join([i for i in sub_str.split(" ") if i.isalpha()])
+        sub_str = ' '.join([i for i in sub_str.split(" ") if i.isalpha() if len(i) > 1])
         return sub_str
 
     def __stemmer(self, sub_str) -> str:
