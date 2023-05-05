@@ -36,3 +36,4 @@ def main(path=PATH, model_type=MODEL_TYPE) -> None:
 
 if __name__ == "__main__":
     main()
+
