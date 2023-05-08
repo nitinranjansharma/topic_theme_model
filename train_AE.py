@@ -58,7 +58,7 @@ def main():
     output = training_obj.auto_encoder_fit()
     reduced = training_obj.model.encoder(torch.from_numpy(vec))
     print(len(output))
-    print(len(reduced))
+    print(reduced.shape)
 
 
 if __name__ == '__main__':
