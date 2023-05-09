@@ -2,7 +2,7 @@
 # and figure out topic words and do theme classification
 import torch
 
-INPUT_SHAPE = 768 # get the combined vector shape
+INPUT_SHAPE = 773 # get the combined vector shape
 
 
 class AutoEncoder(torch.nn.Module):

@@ -11,7 +11,7 @@ from gensim.models import LdaModel
 
 PATH = "./output/temp/input_data.csv"
 MODEL_TYPE = "LDA"
-K = 10
+K = 5
 
 
 class GetTopicsFromStatModels(object):
@@ -75,6 +75,7 @@ def main(path=PATH, model_type=MODEL_TYPE, k=K) -> None:
     lda_obj1.lda_data_prep()
     lda_model, corpus = lda_obj1.run_lda()
     lda_vec = lda_obj1.get_lda_vec(lda_model, corpus)
+    print(lda_vec.shape)
     print(" Vectors generated")
 
 

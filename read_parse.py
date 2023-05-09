@@ -46,7 +46,7 @@ def main(input_file_path):
             df = pd.read_excel(input_file_path)
             df = df.reset_index()
             df.columns = ['index', 'text']
-            df.head(500).to_csv("./output/temp/input_data.csv", index=False)
+            df.head(100).to_csv("./output/temp/input_data.csv", index=False)
     else:
         print("Enter correct path, no file exist")
 
