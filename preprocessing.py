@@ -60,8 +60,7 @@ class Preprocessing(object):
         """ Write csv back to temp folder"""
         self.df.to_csv("./output/temp/input_data.csv", index=False)
 
-    def main(self):
-
+    def sequence(self):
         self.get_csv()
         self.text_clean()
         self.remove_stopwords()
@@ -70,8 +69,14 @@ class Preprocessing(object):
 
 
 PATH = "./output/temp/input_data.csv"
-if __name__ == "__main__":
+
+
+def main():
     # nltk.download('stopwords')
     # nltk.download('punkt')
     prep_obj = Preprocessing(PATH)
-    prep_obj.main()
+    prep_obj.sequence()
+
+
+if __name__ == "__main__":
+    main()

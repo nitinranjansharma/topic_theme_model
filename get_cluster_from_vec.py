@@ -1,6 +1,6 @@
 # Get the clusters from vectors created
 # TODOS - combining and make provisions for experimentation
-
+import pandas as pd
 import torch
 from sklearn.cluster import KMeans
 from BERT_embedding import BERTEmbedding
@@ -36,6 +36,10 @@ def main():
     get_cluster = GetCluster(vec=reduced, method='kmeans')
     cluster_idx = get_cluster.fit_cluster()
     print(cluster_idx)
+    # get the temp csv and write back to it
+    df = pd.read_csv(PATH)
+    df['cluster_idx'] = cluster_idx
+    df.to_csv(PATH)
 
 
 if __name__ == '__main__':
