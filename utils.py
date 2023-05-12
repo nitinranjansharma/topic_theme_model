@@ -16,8 +16,8 @@ def get_csv(path):
         return pd.DataFrame()
 
 
-def replace_enter(str):
-    return re.sub(r'(\n+)(?=[A-Z])', r'.', str)
+def replace_enter(str1):
+    return re.sub(r'(\n+)(?=[A-Z])', r'.', str1)
 
 
 def get_word_cloud(text, wc_title, wc_file_name='wordcloud.jpeg'):
